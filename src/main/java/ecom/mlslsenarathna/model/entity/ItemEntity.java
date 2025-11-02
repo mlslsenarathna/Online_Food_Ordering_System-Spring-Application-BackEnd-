@@ -14,6 +14,6 @@ public class ItemEntity {
     @Id
     private String itemID;
     private String itemName;
-    private String itemPrice;
+    private double itemPrice;
     private int stockecount;
 }
