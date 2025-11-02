@@ -6,6 +6,8 @@ import ecom.mlslsenarathna.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/items")
 public class ItemsController {
@@ -27,6 +29,10 @@ public class ItemsController {
     @DeleteMapping("/deleteById/{itemId}")
     public void deleteItemById(@PathVariable String itemId){
         itemService.deleteById(itemId);
+    }
+    @GetMapping("/getAllItems")
+    public List<ItemDTO> getAllItems(){
+        return itemService.getAllItems();
     }
 
 

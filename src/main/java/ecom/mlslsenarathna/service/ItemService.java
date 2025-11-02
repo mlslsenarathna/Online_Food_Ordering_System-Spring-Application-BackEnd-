@@ -6,6 +6,8 @@ import ecom.mlslsenarathna.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,6 +40,21 @@ public class ItemService {
 
     public void deleteById(String itemId) {
         itemRepository.deleteById(itemId);
+    }
+
+    public List<ItemDTO> getAllItems() {
+        List<ItemEntity> itemEntityList=itemRepository.findAll();
+        List<ItemDTO> itemList=new ArrayList<>();
+
+        for(ItemEntity item:itemEntityList){
+            itemList.add(new ItemDTO(
+                    item.getItemID(),
+                    item.getItemName(),
+                    item.getItemPrice(),
+                    item.getStockecount()
+            ));
+        }
+        return  itemList;
     }
 
 
