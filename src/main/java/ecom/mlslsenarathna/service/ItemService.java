@@ -57,14 +57,15 @@ public class ItemService {
         return  itemList;
     }
 
+    public void updateStockCount(String itemId) {
+        ItemDTO item=getById(itemId);
+        itemRepository.save(new ItemEntity(
+           item.getItemID(),
+           item.getItemName(),
+           item.getItemPrice(),
+           item.getStockecount()+40
+        ));
+    }
 
 
-  /*  private void setOrderID(){
-        if(getLastOrderID()!=null){
-            String lastId=getLastOrderID();
-            lastId=lastId.split("[A-Z]")[1];
-            lastId=String.format("D%03d",(Integer.parseInt(lastId)+1));
-            lblOrderID.setText(lastId);
-        }
-    }*/
 }

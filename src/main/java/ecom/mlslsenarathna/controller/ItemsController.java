@@ -34,6 +34,10 @@ public class ItemsController {
     public List<ItemDTO> getAllItems(){
         return itemService.getAllItems();
     }
+    @PostMapping("/updateItemStock/{itemId}")
+    public void updateItemStock(@PathVariable String itemId){
+        itemService.updateStockCount(itemId);
+    }
 
 
 }

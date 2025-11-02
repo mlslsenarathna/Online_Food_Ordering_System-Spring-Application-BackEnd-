@@ -1,7 +1,6 @@
 package ecom.mlslsenarathna.controller;
 
 import ecom.mlslsenarathna.model.dto.CartItemDTO;
-import ecom.mlslsenarathna.model.dto.ItemDTO;
 import ecom.mlslsenarathna.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +18,11 @@ public class OrderController {
     @PostMapping("/addCartItems")
     public void placeOrder(@RequestBody CartItemDTO[] cartItemDTO){
         orderService.placeNewOrder(cartItemDTO);
+
+    }
+    @PostMapping("/changeStatus/{orderId}")
+    public void changeStatus(@PathVariable String orderId){
+        orderService.changeStatustoComplete();
 
     }
 

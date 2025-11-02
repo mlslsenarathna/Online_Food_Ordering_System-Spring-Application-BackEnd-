@@ -31,6 +31,16 @@ public class OrderService {
     public void placeNewOrder(CartItemDTO[] cartItemDTOList) {
         List<ItemEntity> itemEntityList= new ArrayList<>();
         double totalPrice= getTotalBillPrice(cartItemDTOList);
+        String orderID=generateOrderID();
+
+        saveOrder(
+                new OrderEntity(
+                        orderID,
+                        LocalDate.now(),
+                        totalPrice,
+                        "Pending"
+
+                ));
 
         for(CartItemDTO cartItem:cartItemDTOList){
             itemEntityList.add(new ItemEntity(
@@ -40,29 +50,36 @@ public class OrderService {
                     getItemByID(cartItem.getItemId()).getStockecount()-cartItem.getQuantity()
 
             ));
+            System.out.println("inerrr");
+            saveOrderDetails(new OrderDetailsEntity(
+                    generateOrderDetailsID(),
+                    cartItem.getItemId(),
+                    orderID,
+                    cartItem.getQuantity()
+
+
+                    ));
 
         }
         for (ItemEntity itemEntity:itemEntityList){
             itemRepository.save(itemEntity);
 
         }
-        saveOrderDetails(
-                new OrderEntity(
-                        generateOrderID(),
-                        LocalDate.now(),
-                        totalPrice,
-                        "Pending"
 
-                ));
+
+
 
     }
-    public  void saveOrderDetails(OrderEntity orderEntity){
+    public  void saveOrder(OrderEntity orderEntity){
         orderRepository.save(orderEntity);
+    }
+    public void saveOrderDetails(OrderDetailsEntity orderDetailsEntity){
+        orderDetailsRepository.save(orderDetailsEntity);
     }
     public double getTotalBillPrice(CartItemDTO[] cartItemDTOS){
         double TotalPrice=0;
         for(CartItemDTO cartItemDTO:cartItemDTOS){
-            TotalPrice+=cartItemDTO.getPrice();
+            TotalPrice+=(cartItemDTO.getQuantity()*getItemByID(cartItemDTO.getItemId()).getItemPrice());
         }
         return TotalPrice;
 
@@ -111,5 +128,8 @@ public class OrderService {
             return  lastId;
         }
         return "D001";
+    }
+
+    public void changeStatustoComplete() {
     }
 }
