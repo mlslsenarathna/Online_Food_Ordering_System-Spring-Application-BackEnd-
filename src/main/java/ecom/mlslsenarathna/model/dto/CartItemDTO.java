@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class CartItemDTO {
-    private String orderId;
     private String itemId;
     private String itemName;
     private int quantity;

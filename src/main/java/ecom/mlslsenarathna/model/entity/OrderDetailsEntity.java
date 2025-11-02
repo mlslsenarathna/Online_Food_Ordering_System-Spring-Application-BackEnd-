@@ -15,4 +15,5 @@ public class OrderDetailsEntity {
     private String orderDetailsID;
     private String itemId;
     private String orderId;
+    private int quantity;
 }
